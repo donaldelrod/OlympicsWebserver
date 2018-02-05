@@ -1,0 +1,62 @@
+{% include 'top.html' %}
+
+<div class="content">
+    <div class="container">
+        <h1 class="title">Events</h1>
+        <div class="search">
+            <form class="search-top" method="POST" action="{{url_for('list_events')}}">
+	    
+                <input type="text" name="search" placeholder="Search Sport or Athlete ID" width="80%" float="left">
+                <button class="flat" type="submit">Submit</button>
+		        <button class="flat" type="submit value="reset" name="rstbtn">Reset Search</button>
+		        <br/><br/><br/>
+		        <div class="clear"> </div>
+            </form>
+        </div>
+        <div>
+            <form method="POST"  align="center" action="{{url_for('list_events')}}">
+                <button class="flat" type="submit" value="first" name="firstbtn">First</button>
+                <button class="flat" type="submit" value="previous" name="prevbtn"><- Prev</button>
+                <button class="flat" type="submit" value="next" name="nextbtn">Next -></button>
+                <button class="flat" type="submit" value="last" name="lastbtn">Last</button>
+            </form>
+        </div>
+        <table class="styled">
+            <thead>
+                <tr>
+                    <th>Sport</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Start</th>
+                    <th>Venue</th>
+                </tr>
+            </thead>
+            <tbody>
+                    {% for e in events %}
+                    <tr class='clickable-row' data-href="{{url_for('event_details', event_id=e.event_id)}}" method = POST>
+                        <td>{{ e.sport }}</td>
+                        <td>{{ e.name }}</td>
+                        <td>{{ e.gender }}</td>
+                        <td>{{ e.start }}</td>
+                        <td>{{ e.venue }}</td>
+                    </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript" defer="defer"> jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+	$(".clickable-row").mouseover(function() {
+        $(this).css('background-color', '#eeeeee');
+    });
+	$(".clickable-row").mouseout(function() {
+        $(this).css('background-color', 'white');
+    });
+
+});
+</script>
+
+{% include 'bottom.html' %}
